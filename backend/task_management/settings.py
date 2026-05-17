@@ -26,6 +26,10 @@ SECRET_KEY = 'django-insecure-etry0%n0n*d+@agb)a*h33ph&02v^au56^ysda5o4&!+-4ndr8
 DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
+CSRF_TRUSTED_ORIGINS = [
+    "https://team-task-manager-production-761e.up.railway.app"
+]
+CSRF_COOKIE_SECURE = True
 
 
 # Application definition
