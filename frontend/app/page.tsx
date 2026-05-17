@@ -48,12 +48,21 @@ export default function Home() {
     const handleMouse = (e: MouseEvent) => {
       setMousePos({ x: e.clientX, y: e.clientY });
     };
-    window.addEventListener("mousemove", handleMouse);
-    return () => window.removeEventListener("mousemove", handleMouse);
+    if (typeof window !== "undefined") {
+      window.addEventListener("mousemove", handleMouse);
+    }
+    return () => {
+      if (typeof window !== "undefined") {
+        window.removeEventListener("mousemove", handleMouse);
+      }
+    };
   }, []);
-
-  const parallaxX = (mousePos.x / window.innerWidth - 0.5) * 18;
-  const parallaxY = (mousePos.y / window.innerHeight - 0.5) * 18;
+  let parallaxX = 0, parallaxY = 0;
+  
+  if (typeof window !== "undefined") {
+     parallaxX = (mousePos.x / window.innerWidth - 0.5) * 18;
+     parallaxY = (mousePos.y / window.innerHeight - 0.5) * 18;
+  }
 
   return (
     <>

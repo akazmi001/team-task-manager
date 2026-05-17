@@ -7,9 +7,11 @@ export default function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    const access = localStorage.getItem("access");
-     const refresh = localStorage.getItem("refresh");
+    if (typeof window !== "undefined") {
+      const access = localStorage.getItem("access");
+      const refresh = localStorage.getItem("refresh");
       const role = localStorage.getItem("role");
+    }
     if (access) {
       setUser({ 
         "access": access, 
@@ -19,14 +21,18 @@ export default function AuthProvider({ children }) {
   }, []);
 
   const login = (token) => {
-    localStorage.setItem("token", token);
+    if (typeof window !== "undefined") {
+      localStorage.setItem("token", token);
+    }
     setUser({ token });
   };
 
   const logout = () => {
-    localStorage.removeItem("access");
-    localStorage.removeItem("refresh");
-    localStorage.removeItem("role");
+    if (typeof window !== "undefined") {
+      localStorage.removeItem("access");
+      localStorage.removeItem("refresh");
+      localStorage.removeItem("role");
+    }
     setUser(null);
   };
 
