@@ -5,12 +5,13 @@ export const AuthContext = createContext();
 
 export default function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
+  let access, refresh, role;
 
   useEffect(() => {
     if (typeof window !== "undefined") {
-      const access = localStorage.getItem("access");
-      const refresh = localStorage.getItem("refresh");
-      const role = localStorage.getItem("role");
+       access = localStorage.getItem("access");
+       refresh = localStorage.getItem("refresh");
+       role = localStorage.getItem("role");
     }
     if (access) {
       setUser({ 
