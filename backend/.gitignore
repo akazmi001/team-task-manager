@@ -1,0 +1,80 @@
+# Python
+
+**pycache**/
+*.py[cod]
+*.pyo
+*.pyd
+
+# Virtual Environment
+
+venv/
+.env/
+.venv/
+
+# Environment Variables
+
+.env
+.env.*
+
+# Django
+
+*.log
+*.pot
+*.pyc
+db.sqlite3
+media/
+
+# Django migrations (optional – keep if needed)
+
+# */migrations/*
+
+# !*/migrations/**init**.py
+
+# Static files
+
+staticfiles/
+static/
+
+# IDE / Editor
+
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS files
+
+.DS_Store
+Thumbs.db
+
+# Testing / coverage
+
+.coverage
+htmlcov/
+.tox/
+.nox/
+
+# Distribution / packaging
+
+build/
+dist/
+*.egg-info/
+
+# Node (if frontend inside same repo)
+
+node_modules/
+.next/
+
+# Secrets
+
+*.key
+*.pem
+
+# Logs
+
+*.log
+
+# Railway / deployment
+
+.env.local
+.env.production
