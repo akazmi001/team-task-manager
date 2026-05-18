@@ -8,24 +8,14 @@ export default function AuthProvider({ children }) {
   let access, refresh, role;
 
   useEffect(() => {
-    if (typeof window !== "undefined") {
-       access = localStorage.getItem("access");
-       refresh = localStorage.getItem("refresh");
-       role = localStorage.getItem("role");
-    }
-    if (access) {
-      setUser({ 
-        "access": access, 
-        "refresh": refresh,
-         "role": role });
+    role = localStorage.getItem("role");
+    if (role) {
+      setUser(role);
     }
   }, []);
 
-  const login = (token) => {
-    if (typeof window !== "undefined") {
-      localStorage.setItem("token", token);
-    }
-    setUser({ token });
+  const login = (role) => {
+    setUser(role);
   };
 
   const logout = () => {

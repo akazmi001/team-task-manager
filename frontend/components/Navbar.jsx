@@ -18,7 +18,7 @@ export default function Navbar() {
 
    const navLinks = [
   { href: "/dashboard", label: "Dashboard" },
-    ...(user?.role?.toLowerCase() === "admin"
+    ...(user?.toLowerCase() == "admin"
       ? [{ href: "/projects", label: "Projects" }]
       : [{ href: "/tasks", label: "Tasks" }]),
   ];
