@@ -7,16 +7,27 @@ export default function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   let access, refresh, role;
 
+  // useEffect(() => {
+  //   role = localStorage.getItem("role");
+  //   if (role) {
+  //     setUser(role);
+  //   }
+  // }, []);
   useEffect(() => {
-    role = localStorage.getItem("role");
-    if (role) {
-      setUser(role);
+  if (typeof window !== "undefined") {
+    const storedRole = localStorage.getItem("role");
+    if (storedRole) {
+      setUser(storedRole);
     }
-  }, []);
+  }
+}, []);
 
   const login = (role) => {
-    setUser(role);
-  };
+  if (typeof window !== "undefined") {
+    localStorage.setItem("role", role);
+  }
+  setUser(role);
+};
 
   const logout = () => {
     if (typeof window !== "undefined") {

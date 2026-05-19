@@ -2,7 +2,8 @@
 
 import { useState, useEffect } from 'react'
 import { useParams } from 'next/navigation'
-import { createTask, getTasks, updateTask, getHeader } from '../../../../lib/api'
+// import { createTask, getTasks, updateTask, getHeader } from '../../../../lib/api'
+import { createTask, getTasks, updateTask, getHeader } from "@/lib/api";
 
 const STATUS_COLORS = {
   todo: 'bg-zinc-700 text-zinc-300',
@@ -251,6 +252,7 @@ function TaskAccordion({ task, onEdit, projectId }) {
 
 export default function TasksPage() {
   const { projectId } = useParams()
+  console.log("Tasks page render", projectId);
   const [tasks, setTasks] = useState([])
   const [editingTask, setEditingTask] = useState(null)
   const [form, setForm] = useState({
@@ -260,27 +262,36 @@ export default function TasksPage() {
     due_date: '',
   })
 
-  useEffect(() => {
-    fetchTasks()
-  }, [projectId])
-
-  const fetchTasks = async () => {
-    const resp = await getTasks(projectId)
-    setTasks(resp)
+// ✅ Define globally inside component
+const fetchTasks = async () => {
+  try {
+    const resp = await getTasks(projectId);
+    setTasks(Array.isArray(resp) ? resp : []);
+  } catch (error) {
+    console.error("Error fetching tasks:", error);
+    setTasks([]);
   }
+};
 
-  const handleSubmit = async (e) => {
-    e.preventDefault()
-    try {
-      await createTask(form, projectId)
-      fetchTasks()
-      setForm({ title: '', description: '', status: 'todo', due_date: '' })
-      alert('Task Created.')
-    } catch {
-      alert('You are not admin')
-    }
+// ✅ useEffect just calls it
+useEffect(() => {
+  if (!projectId) return;
+  fetchTasks();
+}, [projectId]);
+
+// ✅ Now this works
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  try {
+    await createTask(form, projectId);
+    await fetchTasks();   // ✅ NOW WORKS
+    setForm({ title: '', description: '', status: 'todo', due_date: '' });
+    alert('Task Created.');
+  } catch (error) {
+    console.error(error);
+    alert(error?.response?.data?.message || 'Error');
   }
-
+};
   const handleUpdate = async (taskId, updatedForm) => {
     await updateTask(taskId, updatedForm, projectId)
     fetchTasks()

@@ -13,14 +13,24 @@ export default function Projects() {
   );
 
   useEffect(() => {
-    fetchProjects();
-  }, []);
-
-
+  fetchProjects();
+}, []);
   const fetchProjects = async () => {
+  try {
     const resp = await getProjectApi();
-    setProjects(resp);
+
+    if (Array.isArray(resp)) {
+      setProjects(resp);
+    } else {
+      console.log("Invalid response:", resp);
+      setProjects([]);
+    }
+
+  } catch (error) {
+    console.error("Error fetching projects:", error);
+    setProjects([]);
   }
+  };
 
    const handleSubmit = async (e) => {
      e.preventDefault();
